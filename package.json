@@ -1,0 +1,28 @@
+{
+  "name": "employee-tracker-system",
+  "version": "1.0.0",
+  "description": "Employee attendance tracking system with team management and anti-abuse controls",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "npm run dev --workspace=client",
+    "dev:server": "npm run dev --workspace=server",
+    "build": "npm run build --workspace=client",
+    "start": "npm start --workspace=server",
+    "test": "npm test --workspaces"
+  },
+  "keywords": [
+    "attendance",
+    "employee-tracking",
+    "team-management"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
