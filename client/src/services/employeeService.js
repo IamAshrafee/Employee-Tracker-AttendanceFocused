@@ -77,4 +77,22 @@ export const employeeService = {
     });
     return response.data;
   },
+
+  // Reports
+  async getAttendanceReport(startDate, endDate) {
+    const response = await api.get(
+      `/employee/reports/attendance?startDate=${startDate}&endDate=${endDate}`,
+    );
+    return response.data;
+  },
+
+  async getMonthlyReport(month) {
+    const response = await api.get(`/employee/reports/monthly?month=${month}`);
+    return response.data;
+  },
+
+  async getDailyReport(date) {
+    const response = await api.get(`/employee/reports/daily?date=${date}`);
+    return response.data;
+  },
 };

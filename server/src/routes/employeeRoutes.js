@@ -16,6 +16,11 @@ import {
   getAvailableDatesController,
   requestEmergencyOffController,
 } from "../controllers/restDayController.js";
+import {
+  getAttendanceReportController,
+  getMonthlyReportController,
+  getDailyReportController,
+} from "../controllers/reportController.js";
 import { protect, restrictTo } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -40,5 +45,10 @@ router.post("/rest-days", selectRestDaysController);
 router.get("/rest-days", getRestDaysController);
 router.get("/rest-days/available", getAvailableDatesController);
 router.post("/emergency-off", requestEmergencyOffController);
+
+// Reports
+router.get("/reports/attendance", getAttendanceReportController);
+router.get("/reports/monthly", getMonthlyReportController);
+router.get("/reports/daily", getDailyReportController);
 
 export default router;
