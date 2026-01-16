@@ -51,7 +51,10 @@ export const employeeService = {
 
   // Rest Days
   async selectRestDays(month, selectedDates) {
-    const response = await api.post('/employee/rest-days', { month, selectedDates });
+    const response = await api.post("/employee/rest-days", {
+      month,
+      selectedDates,
+    });
     return response.data;
   },
 
@@ -61,13 +64,17 @@ export const employeeService = {
   },
 
   async getAvailableDates(month) {
-    const response = await api.get(`/employee/rest-days/available?month=${month}`);
+    const response = await api.get(
+      `/employee/rest-days/available?month=${month}`,
+    );
     return response.data;
   },
 
   async requestEmergencyOff(date, reason) {
-    const response = await api.post('/employee/emergency-off', { date, reason });
+    const response = await api.post("/employee/emergency-off", {
+      date,
+      reason,
+    });
     return response.data;
   },
 };
-```
