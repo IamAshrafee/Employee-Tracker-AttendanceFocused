@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { LoginForm } from "./features/auth/LoginForm";
 import { ProtectedRoute } from "./features/auth/ProtectedRoute";
 import { AdminDashboard } from "./features/admin/AdminDashboard";
+import { LeaderDashboard } from "./features/leader/LeaderDashboard";
 import { EmployeeDashboard } from "./features/employee/EmployeeDashboard";
 import "./index.css";
 
@@ -18,16 +19,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-// Simple placeholder for leader dashboard
-const LeaderDashboard = () => (
-  <div className="dashboard">
-    <div className="container">
-      <h1>Team Leader Dashboard</h1>
-      <p>Coming soon...</p>
-    </div>
-  </div>
-);
 
 function App() {
   return (

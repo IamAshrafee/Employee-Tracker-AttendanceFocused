@@ -1,4 +1,4 @@
-import { LogOut, Clock, Calendar, BarChart3 } from "lucide-react";
+import { LogOut, BarChart3 } from "lucide-react";
 import { authService } from "../../services/authService";
 import { Button } from "../../components/ui/button";
 import {
@@ -10,6 +10,7 @@ import {
 } from "../../components/ui/card";
 import { AttendanceWidget } from "./AttendanceWidget";
 import { BreakManager } from "./BreakManager";
+import { RestDaySelector } from "./RestDaySelector";
 
 export const EmployeeDashboard = () => {
   const user = authService.getCurrentUser();
@@ -20,13 +21,6 @@ export const EmployeeDashboard = () => {
   };
 
   const upcomingFeatures = [
-    {
-      icon: Calendar,
-      title: "Rest Days",
-      description: "Select your monthly rest days",
-      color: "text-green-600",
-      bgColor: "bg-green-50",
-    },
     {
       icon: BarChart3,
       title: "Reports",
@@ -75,39 +69,48 @@ export const EmployeeDashboard = () => {
           </CardHeader>
         </Card>
 
-        {/* Widgets Grid */}
-        <div className="grid gap-6 md:grid-cols-2 mb-8">
-          <AttendanceWidget />
-          <BreakManager />
+        {/* Main Widgets Grid */}
+        <div className="grid gap-6 lg:grid-cols-3 mb-8">
+          <div className="lg:col-span-2 space-y-6">
+            <div className="grid gap-6 md:grid-cols-2">
+              <AttendanceWidget />
+              <BreakManager />
+            </div>
+          </div>
+          <div>
+            <RestDaySelector />
+          </div>
         </div>
 
         {/* Upcoming Features */}
-        <div>
-          <h2 className="text-lg font-semibold mb-4">More Features</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {upcomingFeatures.map((feature) => (
-              <Card
-                key={feature.title}
-                className="group cursor-not-allowed opacity-60"
-              >
-                <CardHeader>
-                  <div
-                    className={`w-12 h-12 rounded-lg ${feature.bgColor} flex items-center justify-center mb-4`}
-                  >
-                    <feature.icon className={`h-6 w-6 ${feature.color}`} />
-                  </div>
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
-                  <CardDescription>{feature.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-xs text-muted-foreground italic bg-muted/50 px-3 py-2 rounded-md">
-                    Coming soon...
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+        {upcomingFeatures.length > 0 && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">More Features</h2>
+            <div className="grid gap-6">
+              {upcomingFeatures.map((feature) => (
+                <Card
+                  key={feature.title}
+                  className="group cursor-not-allowed opacity-60"
+                >
+                  <CardHeader>
+                    <div
+                      className={`w-12 h-12 rounded-lg ${feature.bgColor} flex items-center justify-center mb-4`}
+                    >
+                      <feature.icon className={`h-6 w-6 ${feature.color}`} />
+                    </div>
+                    <CardTitle className="text-lg">{feature.title}</CardTitle>
+                    <CardDescription>{feature.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-xs text-muted-foreground italic bg-muted/50 px-3 py-2 rounded-md">
+                      Coming soon...
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );

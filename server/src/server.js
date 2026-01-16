@@ -6,6 +6,7 @@ import { initCronJobs } from "./jobs/cronJobs.js";
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
+import leaderRoutes from "./routes/leaderRoutes.js";
 
 // Initialize express app
 const app = express();
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/employee", employeeRoutes);
+app.use("/api/leader", leaderRoutes);
 
 // Health check route
 app.get("/health", (req, res) => {
