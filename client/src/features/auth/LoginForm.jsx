@@ -4,9 +4,20 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import toast from "react-hot-toast";
+import { Loader2, LogIn, Info } from "lucide-react";
 import { authService } from "../../services/authService";
 import { formatDeviceInfo } from "../../utils/deviceId";
-import "./LoginForm.css";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -56,69 +67,87 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card card">
-        <div className="login-header">
-          <h1>Employee Tracker</h1>
-          <p>Sign in to your account</p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary via-primary/90 to-primary/80">
+      <div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <Card className="border-0 shadow-2xl">
+          <CardHeader className="space-y-1 text-center">
+            <CardTitle className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              Employee Tracker
+            </CardTitle>
+            <CardDescription className="text-base">
+              Sign in to your account to continue
+            </CardDescription>
+          </CardHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-          <div className="form-group">
-            <label htmlFor="email" className="label">
-              Email Address
-            </label>
-            <input
-              {...register("email")}
-              id="email"
-              type="email"
-              className="input"
-              placeholder="you@example.com"
-              autoComplete="email"
-            />
-            {errors.email && (
-              <p className="error-text">{errors.email.message}</p>
-            )}
-          </div>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  {...register("email")}
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  disabled={isLoading}
+                />
+                {errors.email && (
+                  <p className="text-sm text-destructive">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="password" className="label">
-              Password
-            </label>
-            <input
-              {...register("password")}
-              id="password"
-              type="password"
-              className="input"
-              placeholder="••••••••"
-              autoComplete="current-password"
-            />
-            {errors.password && (
-              <p className="error-text">{errors.password.message}</p>
-            )}
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  {...register("password")}
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  disabled={isLoading}
+                />
+                {errors.password && (
+                  <p className="text-sm text-destructive">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary login-btn"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <span className="spinner"></span>
-                Signing in...
-              </>
-            ) : (
-              "Sign In"
-            )}
-          </button>
-        </form>
+              <Button
+                type="submit"
+                className="w-full"
+                size="lg"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Signing in...
+                  </>
+                ) : (
+                  <>
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Sign In
+                  </>
+                )}
+              </Button>
+            </form>
+          </CardContent>
 
-        <div className="login-footer">
-          <p className="device-notice">
-            ℹ️ You can only be logged in on one device at a time
-          </p>
-        </div>
+          <CardFooter>
+            <div className="w-full p-3 bg-muted/50 rounded-md border border-border/50">
+              <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                <p>
+                  You can only be logged in on one device at a time. Logging in
+                  here will automatically log you out from other devices.
+                </p>
+              </div>
+            </div>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   );

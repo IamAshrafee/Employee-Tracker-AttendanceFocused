@@ -1,5 +1,15 @@
+import { LogOut, Clock, Calendar, BarChart3 } from "lucide-react";
 import { authService } from "../../services/authService";
-import "./EmployeeDashboard.css";
+import { Button } from "../../components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
+import { AttendanceWidget } from "./AttendanceWidget";
+import { BreakManager } from "./BreakManager";
 
 export const EmployeeDashboard = () => {
   const user = authService.getCurrentUser();
@@ -9,53 +19,93 @@ export const EmployeeDashboard = () => {
     window.location.href = "/login";
   };
 
+  const upcomingFeatures = [
+    {
+      icon: Calendar,
+      title: "Rest Days",
+      description: "Select your monthly rest days",
+      color: "text-green-600",
+      bgColor: "bg-green-50",
+    },
+    {
+      icon: BarChart3,
+      title: "Reports",
+      description: "View your attendance history",
+      color: "text-purple-600",
+      bgColor: "bg-purple-50",
+    },
+  ];
+
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <div className="container">
-          <div className="header-content">
-            <h1>Employee Dashboard</h1>
-            <div className="user-info">
-              <span className="user-name">{user?.name}</span>
-              <button onClick={handleLogout} className="btn btn-secondary">
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b bg-card">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold tracking-tight">
+              Employee Dashboard
+            </h1>
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-muted-foreground">
+                Welcome,{" "}
+                <span className="font-medium text-foreground">
+                  {user?.name}
+                </span>
+              </span>
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
                 Logout
-              </button>
+              </Button>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="dashboard-main">
-        <div className="container">
-          <div className="welcome-card card">
-            <h2>Welcome, {user?.name}! 👋</h2>
-            <p>Your attendance tracking system is ready.</p>
-          </div>
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8">
+        {/* Welcome Card */}
+        <Card className="mb-8 border-0 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-3xl">
+              Welcome back, {user?.name}! 👋
+            </CardTitle>
+            <CardDescription className="text-primary-foreground/80 text-base">
+              Your attendance tracking system is ready to use
+            </CardDescription>
+          </CardHeader>
+        </Card>
 
-          <div className="dashboard-grid">
-            <div className="card">
-              <h3>📋 Attendance</h3>
-              <p>Clock in and out for your workday</p>
-              <div className="placeholder-notice">Coming soon...</div>
-            </div>
+        {/* Widgets Grid */}
+        <div className="grid gap-6 md:grid-cols-2 mb-8">
+          <AttendanceWidget />
+          <BreakManager />
+        </div>
 
-            <div className="card">
-              <h3>☕ Breaks</h3>
-              <p>Manage your break time</p>
-              <div className="placeholder-notice">Coming soon...</div>
-            </div>
-
-            <div className="card">
-              <h3>🏖️ Rest Days</h3>
-              <p>Select your monthly rest days</p>
-              <div className="placeholder-notice">Coming soon...</div>
-            </div>
-
-            <div className="card">
-              <h3>📊 Reports</h3>
-              <p>View your attendance history</p>
-              <div className="placeholder-notice">Coming soon...</div>
-            </div>
+        {/* Upcoming Features */}
+        <div>
+          <h2 className="text-lg font-semibold mb-4">More Features</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {upcomingFeatures.map((feature) => (
+              <Card
+                key={feature.title}
+                className="group cursor-not-allowed opacity-60"
+              >
+                <CardHeader>
+                  <div
+                    className={`w-12 h-12 rounded-lg ${feature.bgColor} flex items-center justify-center mb-4`}
+                  >
+                    <feature.icon className={`h-6 w-6 ${feature.color}`} />
+                  </div>
+                  <CardTitle className="text-lg">{feature.title}</CardTitle>
+                  <CardDescription>{feature.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-xs text-muted-foreground italic bg-muted/50 px-3 py-2 rounded-md">
+                    Coming soon...
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </main>

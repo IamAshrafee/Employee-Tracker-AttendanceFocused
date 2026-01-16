@@ -2,13 +2,19 @@ import express from "express";
 import cors from "cors";
 import { config } from "./config/index.js";
 import { connectDB } from "./config/database.js";
+import { initCronJobs } from "./jobs/cronJobs.js";
 import authRoutes from "./routes/authRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import employeeRoutes from "./routes/employeeRoutes.js";
 
 // Initialize express app
 const app = express();
 
 // Connect to MongoDB
 connectDB();
+
+// Initialize scheduled jobs
+initCronJobs();
 
 // Middleware
 app.use(cors());
@@ -17,6 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/employee", employeeRoutes);
 
 // Health check route
 app.get("/health", (req, res) => {
